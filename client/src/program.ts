@@ -16,7 +16,6 @@ main();
 
 async function main() {
     const profiler = new Profiler();
-    const initialStart = new Date();
 
     const playerId = process.argv[2] || 0;
 
@@ -29,24 +28,36 @@ async function main() {
     const { TicketId } = await createMatchmakingTicket(EntityToken, latencies.length > 0 ? latencies : undefined);
     profiler.measureSinceLast("Created ticket");
 
-    const { MatchId } = await pollForMatch(TicketId);
+    const { MatchId, CancellationReasonString } = await pollForMatch(TicketId);
     profiler.measureSinceLast("Tickets Matched");
 
     if (!!MatchId) {
-        const { } = await getMatch(MatchId);
+        // tslint:disable-next-line: no-console
+        console.log(`Got match: ${MatchId}`);
+
+        // TODO: If latencies are provided, the response to this contains a RegionPreferences array
+        await getMatch(MatchId);
         profiler.measureSinceLast("Got Match");
 
         const creator = await pollForGroupData(MatchId, "Creator");
         profiler.measureSinceLast("Got Creator");
 
-        // If i should create the server
+        // If this client should create the server
+        // Note: We wouldn't need to do this in Azure, or if cloudscript allowed for a longer timeout on events
         if (creator === TicketId) {
             await createMatchOnGameye(MatchId, "csgo-dem", ["frankfurt"], "bots", { maxRounds: 2 });
             profiler.measureSinceLast("Started Gameye Server");
         }
 
         const server = await pollForGameyeServer(MatchId);
+
+        // tslint:disable-next-line: no-console
+        console.log(`Got server for ${MatchId}, client should connect to: ${JSON.stringify(server.host)}`);
+
         profiler.measureSinceLast("Got Gameye Server");
         profiler.measureSinceStart("Finished");
+    } else {
+        // tslint:disable-next-line: no-console
+        console.error(`Failed to create a match: ${CancellationReasonString}`);
     }
 }

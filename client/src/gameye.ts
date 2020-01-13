@@ -6,6 +6,7 @@ export async function createMatchOnGameye(matchKey, gameKey, locationKeys, templ
         FunctionParameter: { matchKey, gameKey, locationKeys, templateKey, config },
         GeneratePlayStreamEvent: true,
     }, (_, { data }) => resolve(data))) as any;
+    return result;
 }
 
 export async function pollForGameyeServer(matchKey) {
@@ -20,5 +21,7 @@ export async function pollForGameyeServer(matchKey) {
         if (!!result.FunctionResult.server) {
             return result.FunctionResult.server;
         }
+
+        await new Promise(resolve => setTimeout(resolve, 2000));
     }
 }
