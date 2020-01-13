@@ -53,14 +53,6 @@ handlers.matchFound = function (args, context) {
             Data: { Creator: psEvent.Payload.TicketIds[0] },
             Permission: "public",
         });
-        /*handlers.startGameyeServer({
-            matchKey: matchId,
-            gameKey: "csgo-dem",
-            locationKeys: ["frankfurt"],
-            templateKey: "bots",
-            config: { maxRounds: 2 }
-        }, null);*/
-
     } catch (ex) {
         log.error("Exception", ex);
     }
