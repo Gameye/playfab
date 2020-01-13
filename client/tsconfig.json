@@ -7,13 +7,9 @@
         "outDir": "./node",
         "rootDir": "./src",
         "importHelpers": true,
-        "strict": false,
+        "strict": true,
         "experimentalDecorators": true,
         "noEmitOnError": true,
-        "typeRoots": [
-            "./node_modules/@types",
-            "./node_modules/playfab-sdk/Scripts/typings/PlayFab",
-        ]
     },
     "include": [
         "src/**/*"

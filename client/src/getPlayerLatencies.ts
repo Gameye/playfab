@@ -1,15 +1,22 @@
 import * as ping from "ping";
 import { PlayFabMultiplayer } from "playfab-sdk";
 
+export interface Latency {
+    latency: number;
+    region: string;
+}
+
 export async function getPlayerLatencies() {
     const result = await new Promise(resolve =>
-        PlayFabMultiplayer.ListQosServers({}, (err, res) => err ? resolve(err) : resolve(res.data)),
+        PlayFabMultiplayer.ListQosServers({}, (err: any, res: any) => err ? resolve(err) : resolve(res.data)),
     ) as any;
 
-    const latencies = [];
-    await Promise.all(result.QosServers.map(async (server) => {
+    const latencies: Latency[] = [];
+    await Promise.all(result.QosServers.map(async (server: any) => {
         const pingResult = await ping.promise.probe(server.ServerUrl);
-        latencies.push({ region: server.Region, latency: pingResult.avg });
+        if (pingResult.avg !== "unknown") {
+            latencies.push({ region: server.Region, latency: parseFloat(pingResult.avg) });
+        }
     }));
-    return latencies.filter(item => item.latency !== "unknown");
+    return latencies;
 }

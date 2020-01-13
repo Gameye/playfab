@@ -1,6 +1,10 @@
 import { PlayFabMultiplayer } from "playfab-sdk";
 import { QueueName, Timeout } from "./constants";
 
+export interface MatchMakingResult {
+    TicketId: string;
+}
+
 export async function createMatchmakingTicket(userId: any, latencies: any) {
     const ticket = await new Promise((resolve) => PlayFabMultiplayer.CreateMatchmakingTicket({
         Creator: {
@@ -13,8 +17,6 @@ export async function createMatchmakingTicket(userId: any, latencies: any) {
         },
         GiveUpAfterSeconds: Timeout,
         QueueName,
-    }, (err, res) => err ? resolve(err) : resolve(res.data)));
-    return ticket as {
-        TicketId;
-    };
+    }, (err: any, res: any) => err ? resolve(err) : resolve(res.data)));
+    return ticket as MatchMakingResult;
 }

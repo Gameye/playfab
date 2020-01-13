@@ -14,7 +14,7 @@ export class Profiler {
         this.measureFrom(message, this.startTime);
     }
 
-    private measureFrom(message = "Time:", previous) {
+    private measureFrom(message = "Time:", previous: Date) {
         const currentTime = new Date();
         const delta = currentTime.getTime() - previous.getTime();
         // tslint:disable-next-line: no-console

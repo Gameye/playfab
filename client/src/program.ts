@@ -1,5 +1,5 @@
-import { PlayFab, PlayFabAdmin, PlayFabClient, PlayFabGroups } from "playfab-sdk";
-
+import { PlayFabClient } from "playfab-sdk";
+import { TitleId } from "./constants";
 import { createMatchmakingTicket } from "./createMatchmakingTicket";
 import { createMatchOnGameye, pollForGameyeServer } from "./gameye";
 import { getMatch } from "./getMatch";
@@ -9,15 +9,16 @@ import { pollForGroupData } from "./pollForGroupData";
 import { pollForMatch } from "./pollForMatch";
 import { Profiler } from "./profiler";
 
-PlayFabClient.settings.developerSecretKey = process.env.PLAYFAB_SECRET;
-PlayFab.settings.developerSecretKey = process.env.PLAYFAB_SECRET;
-
 main();
 
 async function main() {
+    PlayFabClient.settings.developerSecretKey = process.env.PLAYFAB_SECRET;
+    PlayFabClient.settings.developerSecretKey = process.env.PLAYFAB_SECRET;
+    PlayFabClient.settings.titleId = TitleId;
+
     const profiler = new Profiler();
 
-    const playerId = process.argv[2] || 0;
+    const playerId = process.argv[2] || "0";
 
     const { EntityToken } = await login(playerId);
     profiler.measureSinceLast("Login");
