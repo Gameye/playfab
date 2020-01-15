@@ -34,6 +34,7 @@ export async function pollForGameyeServer(matchKey: string) {
     }
 }
 
+// TODO: Populate the responses
 export function convertRegionsToLocations(regions: string[]) {
     for (const iterator of regions) {
         switch (iterator) {
@@ -57,6 +58,9 @@ export function convertRegionsToLocations(regions: string[]) {
             case "SouthCentralUs":
             case "SoutheastAsia":
             case "WestUs":
+                return ["amsterdam", "frankfurt"];
         }
     }
+
+    return ["amsterdam", "frankfurt"];
 }

@@ -1,7 +1,7 @@
 import { PlayFabClient } from "playfab-sdk";
 import { TitleId } from "./constants";
 import { createMatchmakingTicket } from "./createMatchmakingTicket";
-import { createMatchOnGameye, pollForGameyeServer } from "./gameye";
+import { convertRegionsToLocations, createMatchOnGameye, pollForGameyeServer } from "./gameye";
 import { getMatch } from "./getMatch";
 import { getPlayerLatencies } from "./getPlayerLatencies";
 import { login } from "./login";
@@ -36,16 +36,15 @@ async function main() {
         // tslint:disable-next-line: no-console
         console.log(`Got match: ${MatchId}`);
 
-        // TODO: If latencies are provided, the response to this contains a RegionPreferences array
-        const match = await getMatch(MatchId);
-        profiler.measureSinceLast("Got Match");
-
         const creator = await pollForGroupData(MatchId, "Creator");
         profiler.measureSinceLast("Got Creator");
 
         // If this client should create the server
         // Note: We wouldn't need to do this in Azure, or if cloudscript allowed for a longer timeout on events
         if (creator === TicketId) {
+            const match = await getMatch(MatchId);
+            profiler.measureSinceLast("Got Match");
+
             const gameKey = "csgo-dem";
             const template = "bots";
             const config = { maxRounds: 2 };
