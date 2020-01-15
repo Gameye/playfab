@@ -1,5 +1,5 @@
 import { PlayFabClient } from "playfab-sdk";
-import { TitleId } from "./constants";
+import { GameyeGameConfig, GameyeGameKey, GameyeGameTemplate, TitleId } from "./constants";
 import { createMatchmakingTicket } from "./createMatchmakingTicket";
 import { convertRegionsToLocations, createMatchOnGameye, pollForGameyeServer } from "./gameye";
 import { getMatch } from "./getMatch";
@@ -45,12 +45,9 @@ async function main() {
             const match = await getMatch(MatchId);
             profiler.measureSinceLast("Got Match");
 
-            const gameKey = "csgo-dem";
-            const template = "bots";
-            const config = { maxRounds: 2 };
             const locations = convertRegionsToLocations(match.RegionPreferences);
 
-            await createMatchOnGameye(MatchId, gameKey, locations, template, config);
+            await createMatchOnGameye(MatchId, GameyeGameKey, locations, GameyeGameTemplate, GameyeGameConfig);
             profiler.measureSinceLast("Started Gameye Server");
         }
 
