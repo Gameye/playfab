@@ -1,4 +1,4 @@
-import * as ping from "ping";
+import * as dgram from "dgram";
 import { PlayFabMultiplayer } from "playfab-sdk";
 
 export interface Latency {
@@ -13,10 +13,37 @@ export async function getPlayerLatencies() {
 
     const latencies: Latency[] = [];
     await Promise.all(result.QosServers.map(async (server: any) => {
-        const pingResult = await ping.promise.probe(server.ServerUrl);
-        if (pingResult.avg !== "unknown") {
-            latencies.push({ region: server.Region, latency: parseFloat(pingResult.avg) });
+
+        const socket = dgram.createSocket("udp4");
+
+        const now = new Date().getTime();
+        const buffer = Buffer.alloc(8);
+        buffer.writeUInt8(0xff, 0);
+        buffer.writeUInt8(0xff, 1);
+        buffer.writeIntLE(now, 2, 6);
+
+        const waiter = new Promise(resolve => socket.on("message", (msg, _) => {
+            const returned = msg.readIntLE(2, 6);
+            const delta = new Date().getTime() - returned;
+            resolve(delta);
+        }));
+
+        // This is from Playfab's example code
+        socket.send(new Uint8Array(buffer), 3075, server.ServerUrl);
+
+        const latency = await Promise.race([
+            waiter,
+            new Promise(resolve => setTimeout(resolve, 3000)),
+        ]) as number | undefined;
+
+        if (!!latency) {
+            latencies.push({ region: server.Region, latency });
+        } else {
+            // tslint:disable-next-line: no-console
+            console.error(`${server.ServerUrl} failed to respond in the timeout`);
         }
+
+        socket.close();
     }));
     return latencies;
 }

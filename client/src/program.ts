@@ -37,7 +37,7 @@ async function main() {
         console.log(`Got match: ${MatchId}`);
 
         // TODO: If latencies are provided, the response to this contains a RegionPreferences array
-        await getMatch(MatchId);
+        const match = await getMatch(MatchId);
         profiler.measureSinceLast("Got Match");
 
         const creator = await pollForGroupData(MatchId, "Creator");
@@ -46,7 +46,12 @@ async function main() {
         // If this client should create the server
         // Note: We wouldn't need to do this in Azure, or if cloudscript allowed for a longer timeout on events
         if (creator === TicketId) {
-            await createMatchOnGameye(MatchId, "csgo-dem", ["frankfurt"], "bots", { maxRounds: 2 });
+            const gameKey = "csgo-dem";
+            const template = "bots";
+            const config = { maxRounds: 2 };
+            const locations = convertRegionsToLocations(match.RegionPreferences);
+
+            await createMatchOnGameye(MatchId, gameKey, locations, template, config);
             profiler.measureSinceLast("Started Gameye Server");
         }
 

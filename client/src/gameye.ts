@@ -33,3 +33,30 @@ export async function pollForGameyeServer(matchKey: string) {
         await new Promise(resolve => setTimeout(resolve, 2000));
     }
 }
+
+export function convertRegionsToLocations(regions: string[]) {
+    for (const iterator of regions) {
+        switch (iterator) {
+            case "NorthEurope":
+            case "WestEurope":
+                return ["amsterdam", "frankfurt"];
+
+            case "AustraliaEast":
+            case "AustraliaSoutheast":
+            case "BrazilSouth":
+            case "CentralUs":
+            case "ChinaEast2":
+            case "ChinaNorth2":
+            case "EastAsia":
+            case "EastUs":
+            case "EastUs2":
+            case "JapanEast":
+            case "JapanWest":
+            case "NorthCentralUs":
+            case "SouthAfricaNorth":
+            case "SouthCentralUs":
+            case "SoutheastAsia":
+            case "WestUs":
+        }
+    }
+}
