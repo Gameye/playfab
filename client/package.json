@@ -27,8 +27,6 @@
     "typescript": "^3.7.4"
   },
   "dependencies": {
-    "@types/ping": "^0.2.0",
-    "ping": "^0.2.2",
     "playfab-sdk": "^2.40.191218",
     "tslib": "^1.10.0"
   },
