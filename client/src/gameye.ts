@@ -34,33 +34,46 @@ export async function pollForGameyeServer(matchKey: string) {
     }
 }
 
-// TODO: Populate the responses
 export function convertRegionsToLocations(regions: string[]) {
     for (const iterator of regions) {
         switch (iterator) {
             case "NorthEurope":
+                return ["stockholm"];
+
             case "WestEurope":
-                return ["amsterdam", "frankfurt"];
+                return ["frankfurt", "amsterdam", "london"];
 
             case "AustraliaEast":
             case "AustraliaSoutheast":
+            case "SoutheastAsia":
+                return ["singapore"];
+
             case "BrazilSouth":
+                return ["sao_paulo"];
+
+            case "NorthCentralUs":
             case "CentralUs":
+            case "SouthCentralUs":
+                return ["dallas"];
+
             case "ChinaEast2":
             case "ChinaNorth2":
             case "EastAsia":
-            case "EastUs":
-            case "EastUs2":
             case "JapanEast":
             case "JapanWest":
-            case "NorthCentralUs":
+                return ["hong_kong"];
+
+            case "EastUs":
+            case "EastUs2":
+                return ["washington_dc"];
+
             case "SouthAfricaNorth":
-            case "SouthCentralUs":
-            case "SoutheastAsia":
+                return ["madrid"];
+
             case "WestUs":
-                return ["amsterdam", "frankfurt"];
+                return ["san_jose"];
         }
     }
 
-    return ["amsterdam", "frankfurt"];
+    return ["frankfurt"];
 }
