@@ -1,5 +1,5 @@
 {
-  "name": "@gameye/tsprimer",
+  "name": "@gameye/playfab-client",
   "description": "",
   "main": "./node/main.js",
   "module": "./module/main.js",
