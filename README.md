@@ -1,4 +1,11 @@
-# PlayFab
+# Gameye Playfab Integration
+
+## Intro
+This integration describes how to use Gameye game server hosting in combination with Playfab matchmaking and player data storage for your multiplayer game.
+
+## Requirements
+- Making use of Playfab matchmaking v2
+- Entity events v2 must be enabled for the correct Title ID in your account.
 
 ## Contents
 
