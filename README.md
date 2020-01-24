@@ -60,6 +60,14 @@ In the cloudscript folder is a cloud script that communicates with the Gameye se
 
 - Once the Gameye server is available, the host information can be extracted and clients can use this to connect.
 
+## Playfab Settings
+
+*Do I need to enable "Server allocation"on my queue?*
+No, this activates Playfab's own server solution which isn't needed when using Gameye.
+
+*Using multiple queues*
+Playfab v2 matchmaking is a general matchmaking queue system. If you want to match with the same game mode, you'll need a queue for that mode. Our example only uses one queue, but it's not hard to add multiple. In our example the queue is a constant, not a parameter in the matchmaking, you can make it a paramater and allow the client to specify it on the API call.
+
 ## Notes
 
 - The reason for triggering the game servers via a cloudscript execution are two-fold. Firstly, the free-tier timeouts in cloudscript event rules are too short to create a game server. These limits do not apply when using Azure functions. Secondly, by doing them in cloudscript, we obscure the token and gameye server urls from the client, preventing malicious users from abusing a token.
