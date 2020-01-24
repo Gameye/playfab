@@ -62,10 +62,10 @@ In the cloudscript folder is a cloud script that communicates with the Gameye se
 
 ## Playfab Settings
 
-*Do I need to enable "Server allocation"on my queue?*
+**Do I need to enable "Server allocation"on my queue?**  
 No, this activates Playfab's own server solution which isn't needed when using Gameye.
 
-*Using multiple queues*
+**Using multiple queues**  
 Playfab v2 matchmaking is a general matchmaking queue system. If you want to match with the same game mode, you'll need a queue for that mode. Our example only uses one queue, but it's not hard to add multiple. In our example the queue is a constant, not a parameter in the matchmaking, you can make it a paramater and allow the client to specify it on the API call.
 
 ## Notes
