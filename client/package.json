@@ -12,22 +12,22 @@
     "lint": "tslint \"src/**/*.ts\"",
     "spec": "tape --require \"ts-node/register\"",
     "spec-all": "npm run spec \"src/**/*.spec.ts\"",
-    "coverage": "nyc --report-dir report --reporter text-summary --reporter lcov --include \"src/**/*.ts\" --exclude \"src/**/*.spec.ts\" --extension \".ts\" npm test"
+    "coverage": "nyc --reporter text-summary --reporter lcov --include \"src/**/*.ts\" --exclude \"src/**/*.spec.ts\" --extension \".ts\" npm test"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/blue-tape": "^0.1.33",
-    "@types/tape": "^4.2.33",
+    "@types/tape": "^4.2.34",
     "blue-tape": "^1.0.0",
-    "nyc": "^14.1.1",
-    "tape": "^4.11.0",
-    "ts-node": "^8.3.0",
-    "tslint": "^5.19.0",
-    "typescript": "^3.7.4"
+    "nyc": "^15.0.0",
+    "tape": "^4.13.0",
+    "ts-node": "^8.6.2",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.5"
   },
   "dependencies": {
-    "playfab-sdk": "^2.40.191218",
+    "playfab-sdk": "^2.41.200121",
     "tslib": "^1.10.0"
   },
   "engines": {
