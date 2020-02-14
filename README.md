@@ -71,5 +71,3 @@ Playfab v2 matchmaking is a general matchmaking queue system. If you want to mat
 ## Notes
 
 - The reason for triggering the game servers via a cloudscript execution are two-fold. Firstly, the free-tier timeouts in cloudscript event rules are too short to create a game server. These limits do not apply when using Azure functions. Secondly, by doing them in cloudscript, we obscure the token and gameye server urls from the client, preventing malicious users from abusing a token.
-
-- Compilation may throw some Typescript errors relating to not finding some PlayFab namespaces. This can safely be ignored, as the classes are available, but the typings use a legacy method.
