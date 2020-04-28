@@ -1,4 +1,6 @@
 # Gameye Playfab Integration
+[![License](https://img.shields.io/badge/license-BSD2-brightgreen.svg)](https://github.com/Gameye/playfab/blob/master/LICENSE)
+[![Discord](https://img.shields.io/discord/392611451082244107.svg?label=Discord&logo=discord&color=7289DA&labelColor=2C2F33)](https://discordapp.com/invite/D4dYXu)
 
 ## Intro
 This integration describes how to use Gameye game server hosting in combination with Playfab matchmaking and player data storage for your multiplayer game.
